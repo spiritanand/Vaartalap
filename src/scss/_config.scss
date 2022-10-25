@@ -1,0 +1,29 @@
+$primary-color: #bce5ff;
+$primary-dark-color: #62e1fa;
+$secondary-color: #31304e;
+$secondary-light-color: #4d4d69;
+$secondary-dark-color: #2a2a40;
+$text-color: azure;
+$text-dark-color: #124646;
+$light-green-color: #d6ebe1;
+$placeholder-color: rgb(201, 201, 201);
+
+@mixin logo {
+	color: $primary-dark-color;
+	font-weight: bold;
+	text-align: center;
+}
+
+@mixin sqRoundedImg($size) {
+	width: $size;
+	height: $size;
+	border-radius: 100%;
+	object-fit: cover;
+}
+
+// media queries
+@mixin mobile {
+	@media screen and (max-width: 650px) {
+		@content;
+	}
+}
