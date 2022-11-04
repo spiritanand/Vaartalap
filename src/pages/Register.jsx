@@ -21,6 +21,7 @@ import {
   storage,
   db
 } from "../firebase.js"
+import defaultAvatar from "../images/Users/user.webp"
 import addAvatar from "../images/addAvatar.png"
 
 const Register = () => {
@@ -35,7 +36,7 @@ const Register = () => {
 	const displayName = e.target[0].value.trim();
 	const email = e.target[1].value.trim();
 	const password = e.target[2].value.trim();
-	const avatarFile = e.target[3].files[0];
+	const avatarFile = e.target[3].files[0] || defaultAvatar;
 	
 	if (!displayName) {
 	  setErrMessage("Enter a valid display name.")
@@ -103,17 +104,18 @@ const Register = () => {
 				 name = "avatarFile"
 				 id = "avatarFile"
 				 placeholder = "avatar"
+				 accept="image/*"
 				 required
 		  />
 		  <label htmlFor = "avatarFile">
 			<img src = {addAvatar}
 				 alt = "avatar-icon"
 			/>
-			<span>Add an avatar</span>
+			<span>Add an avatar *</span>
 		  </label>
 		  <button disabled = {loggingIn}>Sign up</button>
 		  {errMessage &&
-			<span className = "errMessage">{errMessage}. Could not register 😔</span>}
+		   <span className = "errMessage">{errMessage}. Could not register 😔</span>}
 		</form>
 		<p>Have an account? <Link to = "/login">Login.</Link></p>
 	  </div>
