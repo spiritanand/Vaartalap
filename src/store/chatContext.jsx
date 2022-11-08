@@ -25,7 +25,7 @@ export const CHAT_ACTIONS = {
 
 function ChatContextProvider(props) {
   const currentUser = useAuthCtx();
-  const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
+  const [chatState, dispatch] = useReducer(chatReducer, INITIAL_STATE);
   
   function chatReducer(state, action) {
 	switch (action.type) {
@@ -47,7 +47,7 @@ function ChatContextProvider(props) {
   
   return (
 	<ChatCtx.Provider value = {{
-	  chatData: state,
+	  chatData: chatState,
 	  dispatch
 	}}
 	>

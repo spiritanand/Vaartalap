@@ -1,33 +1,50 @@
-import React, {useState} from 'react';
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   updateProfile
 } from "firebase/auth";
-import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL
-} from "firebase/storage";
 import {
   doc,
   setDoc
 } from "firebase/firestore";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytesResumable
+} from "firebase/storage";
+import React, {useState} from 'react';
 import {
   Link,
   useNavigate
 } from "react-router-dom";
 import {
   auth,
-  storage,
-  db
+  db,
+  storage
 } from "../firebase.js"
-import defaultAvatar from "../images/Users/user.webp"
 import addAvatar from "../images/addAvatar.png"
+import defaultAvatar from "../images/Users/user.webp"
 
 const Register = () => {
   const [errMessage, setErrMessage] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
   const nav = useNavigate();
+  
+  const loginDemo = async (e) => {
+	e.preventDefault();
+	setLoggingIn(true);
+	const email = import.meta.env.VITE_DEMO_USERNAME;
+	const password = import.meta.env.VITE_DEMO_PASSWORD;
+	
+	try {
+	  await signInWithEmailAndPassword(auth, email, password);
+	  nav("/");
+	} catch (err) {
+	  const errorCode = err.code;
+	  setErrMessage(errorCode.slice(5));
+	  setLoggingIn(false);
+	}
+  }
   
   const handleUserRegistration = async (e) => {
 	e.preventDefault();
@@ -88,6 +105,9 @@ const Register = () => {
   return (
 	<div className = "container">
 	  <div className = "wrapper formWrapper">
+		<div className = "ribbon"
+			 onClick = {loginDemo}
+		><span>demo</span></div>
 		<span className = "logo">Vaartalap</span>
 		<span className = "title">Register</span>
 		<form onSubmit = {handleUserRegistration}>
@@ -100,19 +120,21 @@ const Register = () => {
 		  <input type = "password"
 				 placeholder = {`Password`}
 		  />
-		  <input type = "file"
-				 name = "avatarFile"
-				 id = "avatarFile"
-				 placeholder = "avatar"
-				 accept="image/*"
-				 required
-		  />
-		  <label htmlFor = "avatarFile">
-			<img src = {addAvatar}
-				 alt = "avatar-icon"
+		  <div className = "avatarUpload">
+			<input type = "file"
+				   name = "avatarFile"
+				   id = "avatarFile"
+				   placeholder = "avatar"
+				   accept = "image/*"
+				   required
 			/>
-			<span>Add an avatar *</span>
-		  </label>
+			<label htmlFor = "avatarFile">
+			  <img src = {addAvatar}
+				   alt = "avatar-icon"
+			  />
+			  <span>Add an avatar *</span>
+			</label>
+		  </div>
 		  <button disabled = {loggingIn}>Sign up</button>
 		  {errMessage &&
 		   <span className = "errMessage">{errMessage}. Could not register 😔</span>}

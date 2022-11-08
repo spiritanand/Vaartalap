@@ -34,6 +34,40 @@ body {
 	gap: 0.7rem;
 	width: min(500px, 80%);
 	
+	.ribbon {
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 1;
+		overflow: hidden;
+		width: 75px;
+		height: 75px;
+		text-align: right;
+		cursor: pointer;
+		transition: transform 200ms ease-in;
+		
+		&:hover {
+			transform: scale(1.1);
+		}
+		
+		& span {
+			font-size: 1rem;
+			font-weight: bold;
+			color: config.$primary-dark-color;
+			text-transform: uppercase;
+			text-align: center;
+			line-height: 20px;
+			transform: rotate(45deg);
+			width: 100px;
+			display: block;
+			background: linear-gradient(#124646 0%, #2a2a40 100%);
+			box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+			position: absolute;
+			top: 19px;
+			right: -21px;
+		}
+	}
+	
 	.logo {
 		@include config.logo;
 		font-size: clamp(2rem, 5vw, 3rem);
@@ -88,8 +122,18 @@ body {
 			}
 		}
 		
-		#avatarFile {
-			display: none;
+		.avatarUpload {
+			display: flex;
+			position: relative;
+			
+			input {
+				opacity: 0;
+				position: absolute;
+			}
+			
+			label {
+				width: 100%;
+			}
 		}
 		
 		#avatarFile:invalid + label::after {
@@ -352,6 +396,7 @@ body {
 						color: config.$placeholder-color;
 						max-width: 50px;
 						font-size: 0.5rem;
+						text-align: left;
 					}
 				}
 				
@@ -377,6 +422,12 @@ body {
 				
 				&.owner {
 					flex-direction: row-reverse;
+					
+					.messageInfo {
+						span {
+							text-align: right;
+						}
+					}
 					
 					.messageContent {
 						align-items: flex-end;
@@ -441,10 +492,15 @@ body {
 					transition: transform 100ms ease-in;
 					
 					&:hover {
-						transform: scale(1.1);
+						transform: scale(1.05);
 					}
 					
 					&:active {
+						transform: scale(0.95);
+					}
+					
+					&:disabled {
+						background-color: gray;
 						transform: scale(0.9);
 					}
 				}

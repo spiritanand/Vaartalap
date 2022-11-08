@@ -1,9 +1,9 @@
 import {
-  doc,
-  updateDoc,
   arrayUnion,
+  doc,
+  serverTimestamp,
   Timestamp,
-  serverTimestamp
+  updateDoc
 } from "firebase/firestore";
 import {
   getDownloadURL,
@@ -11,6 +11,7 @@ import {
   uploadBytesResumable
 } from "firebase/storage";
 import React, {useState} from 'react';
+import {v4 as uuid} from "uuid";
 import {
   db,
   storage
@@ -18,20 +19,23 @@ import {
 import attach from "../../../images/attach.png"
 import {useAuthCtx} from "../../../store/authContext.jsx";
 import {useChatCtx} from "../../../store/chatContext.jsx";
-import {v4 as uuid} from "uuid";
 
 const Input = () => {
   const currentUser = useAuthCtx();
   const {chatData} = useChatCtx();
   const [textMessage, setTextMessage] = useState("");
   const [img, setImg] = useState(null);
+  const [isSending, setIsSending] = useState(false);
   
   const handleSend = async (e) => {
 	e.preventDefault();
 	// basic validation
+	
+	setIsSending(true);
 	if (!img && !textMessage.trim()) {
 	  setImg(null);
 	  setTextMessage("");
+	  setIsSending(true);
 	  return;
 	}
 	
@@ -88,8 +92,9 @@ const Input = () => {
 	}
 	
 	// resetting state
-	setImg(null);
 	setTextMessage("");
+	setImg(null);
+	setIsSending(false);
   }
   
   return (
@@ -111,7 +116,7 @@ const Input = () => {
 			   alt = "attach-icon"
 		  />
 		</label>
-		<button>Send</button>
+		<button disabled = {isSending}>Send</button>
 	  </div>
 	</form>
   );
