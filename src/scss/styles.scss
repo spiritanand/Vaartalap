@@ -226,6 +226,7 @@ body {
 	height: max(600px, 80%);
 	display: flex;
 	overflow: hidden;
+	z-index: 1;
 	
 	.sidebar {
 		flex: 1;
@@ -555,7 +556,7 @@ body {
 .footer {
 	background-color: config.$text-dark-color;
 	color: config.$light-green-color;
-	height: max(150px,20vh);
+	height: max(150px, 20vh);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
