@@ -30,7 +30,7 @@ const Register = () => {
   const [loggingIn, setLoggingIn] = useState(false);
   const nav = useNavigate();
   
-  const loginDemo = async (e) => {
+  const handleDemoLogin = async (e) => {
 	e.preventDefault();
 	setLoggingIn(true);
 	const email = import.meta.env.VITE_DEMO_USERNAME;
@@ -103,45 +103,51 @@ const Register = () => {
   }
   
   return (
-	<div className = "container">
-	  <div className = "wrapper formWrapper">
-		<div className = "ribbon"
-			 onClick = {loginDemo}
-		><span>demo</span></div>
-		<span className = "logo">Vaartalap</span>
-		<span className = "title">Register</span>
-		<form onSubmit = {handleUserRegistration}>
-		  <input type = "text"
-				 placeholder = "Display Name"
-		  />
-		  <input type = "email"
-				 placeholder = {`Email`}
-		  />
-		  <input type = "password"
-				 placeholder = {`Password`}
-		  />
-		  <div className = "avatarUpload">
-			<input type = "file"
-				   name = "avatarFile"
-				   id = "avatarFile"
-				   placeholder = "avatar"
-				   accept = "image/*"
-				   required
-			/>
-			<label htmlFor = "avatarFile">
-			  <img src = {addAvatar}
-				   alt = "avatar-icon"
-			  />
-			  <span>Add an avatar *</span>
-			</label>
-		  </div>
-		  <button disabled = {loggingIn}>Sign up</button>
-		  {errMessage &&
-		   <span className = "errMessage">{errMessage}. Could not register 😔</span>}
-		</form>
-		<p>Have an account? <Link to = "/login">Login.</Link></p>
+	<>
+	  <div id = "ribbon">
+		<aside className = "content"
+			   onClick = {handleDemoLogin}
+		>
+		  demo
+		</aside>
 	  </div>
-	</div>
+	  <div className = "container">
+		<div className = "wrapper formWrapper">
+		  <span className = "logo">Vaartalap</span>
+		  <span className = "title">Register</span>
+		  <form onSubmit = {handleUserRegistration}>
+			<input type = "text"
+				   placeholder = "Display Name"
+			/>
+			<input type = "email"
+				   placeholder = {`Email`}
+			/>
+			<input type = "password"
+				   placeholder = {`Password`}
+			/>
+			<div className = "avatarUpload">
+			  <input type = "file"
+					 name = "avatarFile"
+					 id = "avatarFile"
+					 placeholder = "avatar"
+					 accept = "image/*"
+					 required
+			  />
+			  <label htmlFor = "avatarFile">
+				<img src = {addAvatar}
+					 alt = "avatar-icon"
+				/>
+				<span>Add an avatar *</span>
+			  </label>
+			</div>
+			<button disabled = {loggingIn}>Sign up</button>
+			{errMessage &&
+			 <span className = "errMessage">{errMessage}. Could not register 😔</span>}
+		  </form>
+		  <p>Have an account? <Link to = "/login">Login.</Link></p>
+		</div>
+	  </div>
+	</>
   );
 };
 
