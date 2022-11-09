@@ -223,7 +223,7 @@ body {
 .homeWrapper {
 	color: config.$text-color;
 	width: min(900px, 90%);
-	height: min(650px, 80%);
+	height: max(600px, 80%);
 	display: flex;
 	overflow: hidden;
 	
@@ -555,7 +555,7 @@ body {
 .footer {
 	background-color: config.$text-dark-color;
 	color: config.$light-green-color;
-	height: 20vh;
+	height: max(150px,20vh);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
